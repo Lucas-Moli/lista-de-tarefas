@@ -1,0 +1,6 @@
+{
+  "identifier": "default",
+  "description": "Capacidade mínima para a janela principal da aplicação.",
+  "windows": ["main"],
+  "permissions": []
+}

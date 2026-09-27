@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Aplicação desktop To-Do List com Tauri, Rust e SQLite." />
+    <title>To-Do List</title>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="app-header">
+        <div>
+          <p class="eyebrow">Tauri + Rust + SQLite</p>
+          <h1>To-Do List</h1>
+          <p class="subtitle">Organize suas tarefas de forma simples.</p>
+        </div>
+
+        <div class="stats" aria-label="Indicadores de tarefas">
+          <div class="stat-card">
+            <span id="total-count" class="stat-value">0</span>
+            <span class="stat-label">Total</span>
+          </div>
+          <div class="stat-card">
+            <span id="pending-count" class="stat-value">0</span>
+            <span class="stat-label">Pendentes</span>
+          </div>
+          <div class="stat-card">
+            <span id="completed-count" class="stat-value">0</span>
+            <span class="stat-label">Concluídas</span>
+          </div>
+        </div>
+      </header>
+
+      <div id="feedback" class="feedback" role="status" aria-live="polite" hidden></div>
+
+      <main class="app-grid">
+        <section class="panel form-panel" aria-labelledby="form-heading">
+          <div class="section-heading">
+            <div>
+              <p id="form-mode" class="eyebrow">Nova tarefa</p>
+              <h2 id="form-heading">Criar uma tarefa</h2>
+            </div>
+          </div>
+
+          <form id="task-form" novalidate>
+            <div class="field-group">
+              <label for="task-title">Título</label>
+              <input
+                id="task-title"
+                name="title"
+                type="text"
+                maxlength="120"
+                autocomplete="off"
+                placeholder="Ex.: Estudar Rust"
+                required
+              />
+              <div class="field-meta">
+                <span>Obrigatório · 1 a 120 caracteres</span>
+                <span id="title-count">0/120</span>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label for="task-description">Descrição</label>
+              <textarea
+                id="task-description"
+                name="description"
+                maxlength="500"
+                rows="7"
+                placeholder="Adicione uma descrição opcional."
+              ></textarea>
+              <div class="field-meta">
+                <span>Opcional · até 500 caracteres</span>
+                <span id="description-count">0/500</span>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button id="submit-button" class="button button-primary" type="submit">
+                Adicionar tarefa
+              </button>
+              <button id="cancel-edit" class="button button-secondary" type="button" hidden>
+                Cancelar edição
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel list-panel" aria-labelledby="list-heading">
+          <div class="section-heading section-heading-row">
+            <div>
+              <p class="eyebrow">Persistência local</p>
+              <h2 id="list-heading">Suas tarefas</h2>
+            </div>
+          </div>
+
+          <div id="empty-state" class="empty-state" hidden>
+            <div class="empty-icon" aria-hidden="true">✓</div>
+            <h3>Nenhuma tarefa cadastrada</h3>
+            <p>Crie sua primeira tarefa usando o formulário ao lado.</p>
+          </div>
+
+          <ul id="task-list" class="task-list" aria-live="polite"></ul>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="delete-dialog" class="delete-dialog" aria-labelledby="delete-dialog-title">
+      <div class="dialog-content">
+        <p class="eyebrow">Confirmação</p>
+        <h2 id="delete-dialog-title">Excluir tarefa?</h2>
+        <p>Essa ação remove a tarefa permanentemente do banco de dados.</p>
+        <div class="dialog-actions">
+          <button id="cancel-delete" class="button button-secondary" type="button">Cancelar</button>
+          <button id="confirm-delete" class="button button-danger" type="button">Excluir</button>
+        </div>
+      </div>
+    </dialog>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
